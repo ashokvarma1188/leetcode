@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #000000;
+      color: #ffffff;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #121212;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(255,255,255,0.1);
+    }
+    
+    h1, h2 {
+      color: #e0e0e0;
+      text-align: center;
+    }
+    
+    p {
+      color: #cccccc;
+    }
+    
+    .highlight {
+      font-weight: bold;
+      background-color: #e74c3c;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    
+    .node {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background-color: #3498db;
+      color: white;
+      text-align: center;
+      line-height: 50px;
+      margin: 5px;
+      border-radius: 50%;
+      font-weight: bold;
+      position: relative;
+    }
+    
+    .node.current {
+      background-color: #e74c3c;
+      transform: scale(1.1);
+      box-shadow: 0 0 10px rgba(231, 76, 60, 0.7);
+    }
+    
+    .node.duplicate {
+      background-color: #e67e22;
+    }
+    
+    .node.processed {
+      background-color: #2ecc71;
+    }
+    
+    .arrow {
+      display: inline-block;
+      color: #7f8c8d;
+      margin: 0 2px;
+      font-size: 24px;
+    }
+    
+    .null {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background-color: #95a5a6;
+      color: white;
+      text-align: center;
+      line-height: 50px;
+      margin: 5px;
+      border-radius: 5px;
+    }
+    
+    .step {
+      margin: 30px 0;
+      padding: 15px;
+      border-left: 5px solid #3498db;
+      background-color: #1e1e1e;
+    }
+    
+    .array-representation {
+      font-family: monospace;
+      margin: 15px 0;
+      padding: 10px;
+      background-color: #f1c40f;
+      color: #2c3e50;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    .legend {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #1e1e1e;
+      border-radius: 5px;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin: 10px;
+    }
+    
+    .legend-color {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    
+    li {
+      color: #cccccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Deleting Duplicates from a Sorted Linked List</h1>
+    
+    <div class="legend">
+      <h2>Color Legend</h2>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%;">
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #3498db;"></div>
+          <span>Regular node</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #e74c3c;"></div>
+          <span>Current node (n)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #e67e22;"></div>
+          <span>Duplicate node (to be removed)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #2ecc71;"></div>
+          <span>Processed node</span>
+        </div>
+      </div>
+    </div>
+    
+    <p>Let's visualize how this algorithm works with a sorted linked list containing duplicates: [1, 1, 2, 3, 3]</p>
+    
+    <div class="step">
+      <h2>Initial State</h2>
+      <p>We start with our sorted linked list:</p>
+      <div>
+        <div class="node">1</div>
+        <div class="arrow">→</div>
+        <div class="node">1</div>
+        <div class="arrow">→</div>
+        <div class="node">2</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="null">null</div>
+      </div>
+      <div class="array-representation">Array representation: [1, 1, 2, 3, 3]</div>
+      <p>Initialize <code>n = head</code> (pointing to the first node)</p>
+    </div>
+    
+    <div class="step">
+      <h2>Iteration 1</h2>
+      <p>We check if <code>n.val == n.next.val</code>. Since both are 1, they're equal.</p>
+      <div>
+        <div class="node current">1</div>
+        <div class="arrow">→</div>
+        <div class="node duplicate">1</div>
+        <div class="arrow">→</div>
+        <div class="node">2</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="null">null</div>
+      </div>
+      <p>Since the values are equal, we set <code>n.next = n.next.next</code> (skip the duplicate):</p>
+      <div>
+        <div class="node current">1</div>
+        <div class="arrow">→</div>
+        <div class="node">2</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="null">null</div>
+      </div>
+      <div class="array-representation">Array representation: [1, 2, 3, 3]</div>
+    </div>
+    
+    <div class="step">
+      <h2>Iteration 2</h2>
+      <p>Now we check <code>n.val == n.next.val</code>. Since 1 ≠ 2, they're not equal.</p>
+      <div>
+        <div class="node current">1</div>
+        <div class="arrow">→</div>
+        <div class="node">2</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="null">null</div>
+      </div>
+      <p>Since the values are not equal, we move <code>n</code> to the next node:</p>
+      <div>
+        <div class="node processed">1</div>
+        <div class="arrow">→</div>
+        <div class="node current">2</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="null">null</div>
+      </div>
+      <div class="array-representation">Array representation: [1, 2, 3, 3]</div>
+    </div>
+    
+    <div class="step">
+      <h2>Iteration 3</h2>
+      <p>We check if <code>n.val == n.next.val</code>. Since 2 ≠ 3, they're not equal.</p>
+      <div>
+        <div class="node processed">1</div>
+        <div class="arrow">→</div>
+        <div class="node current">2</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="null">null</div>
+      </div>
+      <p>Since the values are not equal, we move <code>n</code> to the next node:</p>
+      <div>
+        <div class="node processed">1</div>
+        <div class="arrow">→</div>
+        <div class="node processed">2</div>
+        <div class="arrow">→</div>
+        <div class="node current">3</div>
+        <div class="arrow">→</div>
+        <div class="node">3</div>
+        <div class="arrow">→</div>
+        <div class="null">null</div>
+      </div>
+      <div class="array-representation">Array representation: [1, 2, 3, 3]</div>
+    </div>
+    
+    <div class="step">
+      <h2>Iteration 4</h2>
+      <p>We check if <code>n.val == n.next.val</code>. Since both are 3, they're equal.</p>
+      <div>
+        <div class="node processed">1</div>
+        <div class="arrow">→</div>
+        <div class="node processed">2</div>
+        <div class="arrow">→</div>
+        <div class="node current">3</div>
+        <div class="arrow">→</div>
+        <div class="node duplicate">3</div>
+        <div class="arrow">→</div>
+        <div class="null">null</div>
+      </div>
+      <p>Since the values are equal, we set <code>n.next = n.next.next</code> (skip the duplicate):</p>
+      <div>
+        <div class="node processed">1</div>
+        <div class="arrow">→</div>
+        <div class="node processed">2</div>
+        <div class="arrow">→</div>
+        <div class="node current">3</div>
+        <div class="arrow">→</div>
+        <div class="null">null</div>
+      </div>
+      <div class="array-representation">Array representation: [1, 2, 3]</div>
+    </div>
+    
+    <div class="step">
+      <h2>Iteration 5</h2>
+      <p>We check if <code>n.next != null</code>. Since <code>n.next</code> is now null, the loop terminates.</p>
+      <div>
+        <div class="node processed">1</div>
+        <div class="arrow">→</div>
+        <div class="node processed">2</div>
+        <div class="arrow">→</div>
+        <div class="node processed">3</div>
+        <div class="arrow">→</div>
+        <div class="null">null</div>
+      </div>
+      <div class="array-representation">Final result: [1, 2, 3]</div>
+    </div>
+    
+    <div class="step">
+      <h2>Algorithm Summary</h2>
+      <p>The algorithm works by:</p>
+      <ol>
+        <li>Starting at the head of the linked list.</li>
+        <li>For each node, comparing its value with the next node's value.</li>
+        <li>If they're equal, we "skip" the next node by setting <code>n.next = n.next.next</code>.</li>
+        <li>If they're not equal, we move to the next node.</li>
+        <li>We continue until we reach the end of the list.</li>
+      </ol>
+      <p>This approach works because the list is already sorted, so duplicates are always adjacent.</p>
+    </div>
+  </div>
+</body>
+</html>
