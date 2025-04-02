@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 900px;
+    }
+    h1 {
+      color: #0ff;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      margin-bottom: 30px;
+    }
+    .code-snippet {
+      background-color: #111;
+      border-left: 4px solid #0ff;
+      border-radius: 5px;
+      padding: 15px;
+      margin: 15px 0 30px 0;
+      font-family: 'Courier New', monospace;
+      white-space: pre;
+      overflow-x: auto;
+      color: #0fc;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+    .highlight {
+      background-color: rgba(0, 255, 255, 0.15);
+      border-radius: 3px;
+      padding: 2px 5px;
+    }
+    .array-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin: 30px 0;
+    }
+    .iteration {
+      background-color: rgba(25, 25, 35, 0.7);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+      margin-bottom: 20px;
+      border: 1px solid #222;
+    }
+    .iteration-title {
+      font-weight: bold;
+      color: #0ff;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+    .array-row {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      position: relative;
+    }
+    .array-label {
+      width: 80px;
+      text-align: right;
+      margin-right: 15px;
+      color: #f0f;
+      font-weight: bold;
+    }
+    .array-boxes {
+      display: flex;
+      gap: 5px;
+    }
+    .array-box {
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      position: relative;
+    }
+    .array-index {
+      position: absolute;
+      bottom: -25px;
+      font-size: 0.8em;
+      color: #888;
+    }
+    .box-initial {
+      background-color: #222;
+      border: 1px solid #444;
+      color: #ccc;
+    }
+    .box-current {
+      background-color: #1a1a3a;
+      border: 1px solid #0ff;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+    .box-j {
+      background-color: #2d0a2d;
+      border: 1px solid #f0f;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    }
+    .box-i {
+      background-color: #2d2d0a;
+      border: 1px solid #ff0;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+    }
+    .box-modified {
+      background-color: #004141;
+      border: 1px solid #0f0;
+      color: #0f0;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+      animation: pulse 2s infinite;
+    }
+    .box-duplicate {
+      background-color: #410000;
+      border: 1px solid #f00;
+      color: #f00;
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+    .pointer {
+      position: absolute;
+      font-weight: bold;
+      font-size: 0.9em;
+      transform: translateY(-30px);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .pointer-i {
+      color: #ff0;
+      background-color: rgba(50, 50, 10, 0.7);
+      border: 1px solid #ff0;
+    }
+    .pointer-j {
+      color: #f0f;
+      background-color: rgba(50, 10, 50, 0.7);
+      border: 1px solid #f0f;
+    }
+    .comparison {
+      background-color: rgba(0, 15, 30, 0.7);
+      border: 1px solid #0af;
+      color: #0cf;
+      border-radius: 5px;
+      padding: 10px 15px;
+      margin: 15px 0;
+      text-align: center;
+      font-size: 1.1em;
+      box-shadow: 0 0 10px rgba(0, 162, 255, 0.2);
+    }
+    .result {
+      background-color: rgba(0, 30, 15, 0.7);
+      border: 1px solid #0f0;
+      color: #0f0;
+      border-radius: 5px;
+      padding: 15px;
+      margin: 20px 0;
+      text-align: center;
+      font-size: 1.3em;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+    }
+    .explanation {
+      background-color: rgba(30, 30, 50, 0.7);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 0.95em;
+      line-height: 1.5;
+      color: #bbb;
+    }
+    .arrow {
+      position: absolute;
+      width: 70px;
+      height: 30px;
+    }
+    .arrow-body {
+      background-color: #0ff;
+      width: 100%;
+      height: 2px;
+      position: absolute;
+      top: 50%;
+    }
+    .arrow-head {
+      width: 0;
+      height: 0;
+      border-left: 8px solid #0ff;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      position: absolute;
+      right: -8px;
+      top: calc(50% - 8px);
+    }
+    @keyframes pulse {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
+    }
+    .key {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+      justify-content: center;
+    }
+    .key-item {
+      display: flex;
+      align-items: center;
+      margin-right: 15px;
+    }
+    .key-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Remove Duplicates Animation</h1>
+    
+    <div class="code-snippet">class Solution {
+    public int removeDuplicates(int[] nums) {
+        int j = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[j] != nums[i]) {
+                nums[++j] = nums[i];
+                
+            }
+        }
+        return ++j;
+    }
+}</div>
+
+    <div class="key">
+      <div class="key-item">
+        <div class="key-box" style="background-color: #2d2d0a; border: 1px solid #ff0;"></div>
+        <span>Pointer i</span>
+      </div>
+      <div class="key-item">
+        <div class="key-box" style="background-color: #2d0a2d; border: 1px solid #f0f;"></div>
+        <span>Pointer j</span>
+      </div>
+      <div class="key-item">
+        <div class="key-box" style="background-color: #004141; border: 1px solid #0f0;"></div>
+        <span>Modified Value</span>
+      </div>
+      <div class="key-item">
+        <div class="key-box" style="background-color: #410000; border: 1px solid #f00;"></div>
+        <span>Duplicate</span>
+      </div>
+    </div>
+    
+    <div class="explanation">
+      <p>For this example, we'll use the array: <span class="highlight">[1, 1, 2, 2, 3, 4, 4]</span></p>
+      <p>The algorithm will remove duplicates in-place and return the length of the array with unique elements.</p>
+    </div>
+    
+    <div class="array-container">
+      <!-- Initialization -->
+      <div class="iteration">
+        <div class="iteration-title">Initialization</div>
+        <div class="array-row">
+          <div class="array-label">Original:</div>
+          <div class="array-boxes">
+            <div class="array-box box-j">1<div class="array-index">0</div></div>
+            <div class="array-box box-i">1<div class="array-index">1</div></div>
+            <div class="array-box box-initial">2<div class="array-index">2</div></div>
+            <div class="array-box box-initial">2<div class="array-index">3</div></div>
+            <div class="array-box box-initial">3<div class="array-index">4</div></div>
+            <div class="array-box box-initial">4<div class="array-index">5</div></div>
+            <div class="array-box box-initial">4<div class="array-index">6</div></div>
+          </div>
+        </div>
+        <div class="explanation">
+          <p>Initially:</p>
+          <p>- j = 0 (pointing to first element)</p>
+          <p>- i = 1 (start of our loop)</p>
+        </div>
+      </div>
+      
+      <!-- Iteration 1 -->
+      <div class="iteration">
+        <div class="iteration-title">Iteration 1: i = 1</div>
+        <div class="array-row">
+          <div class="array-label">Array:</div>
+          <div class="array-boxes">
+            <div class="array-box box-j">1<div class="array-index">0</div>
+              <div class="pointer pointer-j">j=0</div>
+            </div>
+            <div class="array-box box-i box-duplicate">1<div class="array-index">1</div>
+              <div class="pointer pointer-i">i=1</div>
+            </div>
+            <div class="array-box box-initial">2<div class="array-index">2</div></div>
+            <div class="array-box box-initial">2<div class="array-index">3</div></div>
+            <div class="array-box box-initial">3<div class="array-index">4</div></div>
+            <div class="array-box box-initial">4<div class="array-index">5</div></div>
+            <div class="array-box box-initial">4<div class="array-index">6</div></div>
+          </div>
+        </div>
+        <div class="comparison">
+          Compare: nums[j] = 1, nums[i] = 1<br>
+          1 == 1 ? YES (duplicate found)
+        </div>
+        <div class="explanation">
+          <p>Since nums[j] equals nums[i], we found a duplicate.</p>
+          <p>We do NOT increment j, but we will move i forward.</p>
+        </div>
+      </div>
+      
+      <!-- Iteration 2 -->
+      <div class="iteration">
+        <div class="iteration-title">Iteration 2: i = 2</div>
+        <div class="array-row">
+          <div class="array-label">Array:</div>
+          <div class="array-boxes">
+            <div class="array-box box-j">1<div class="array-index">0</div>
+              <div class="pointer pointer-j">j=0</div>
+            </div>
+            <div class="array-box box-duplicate">1<div class="array-index">1</div></div>
+            <div class="array-box box-i">2<div class="array-index">2</div>
+              <div class="pointer pointer-i">i=2</div>
+            </div>
+            <div class="array-box box-initial">2<div class="array-index">3</div></div>
+            <div class="array-box box-initial">3<div class="array-index">4</div></div>
+            <div class="array-box box-initial">4<div class="array-index">5</div></div>
+            <div class="array-box box-initial">4<div class="array-index">6</div></div>
+          </div>
+        </div>
+        <div class="comparison">
+          Compare: nums[j] = 1, nums[i] = 2<br>
+          1 != 2 ? YES (unique element found)
+        </div>
+        <div class="array-row" style="margin-top: 25px;">
+          <div class="array-label">After update:</div>
+          <div class="array-boxes">
+            <div class="array-box box-j">1<div class="array-index">0</div></div>
+            <div class="array-box box-j box-modified">2<div class="array-index">1</div>
+              <div class="pointer pointer-j">j=1</div>
+            </div>
+            <div class="array-box box-i">2<div class="array-index">2</div>
+              <div class="pointer pointer-i">i=2</div>
+            </div>
+            <div class="array-box box-initial">2<div class="array-index">3</div></div>
+            <div class="array-box box-initial">3<div class="array-index">4</div></div>
+            <div class="array-box box-initial">4<div class="array-index">5</div></div>
+            <div class="array-box box-initial">4<div class="array-index">6</div></div>
+          </div>
+        </div>
+        <div class="explanation">
+          <p>Since nums[j] != nums[i], we found a unique element!</p>
+          <p>1. First we increment j to 1</p>
+          <p>2. Then we set nums[j] = nums[i], copying 2 to position 1</p>
+        </div>
+      </div>
+      
+      <!-- Iteration 3 -->
+      <div class="iteration">
+        <div class="iteration-title">Iteration 3: i = 3</div>
+        <div class="array-row">
+          <div class="array-label">Array:</div>
+          <div class="array-boxes">
+            <div class="array-box box-initial">1<div class="array-index">0</div></div>
+            <div class="array-box box-j">2<div class="array-index">1</div>
+              <div class="pointer pointer-j">j=1</div>
+            </div>
+            <div class="array-box box-initial">2<div class="array-index">2</div></div>
+            <div class="array-box box-i box-duplicate">2<div class="array-index">3</div>
+              <div class="pointer pointer-i">i=3</div>
+            </div>
+            <div class="array-box box-initial">3<div class="array-index">4</div></div>
+            <div class="array-box box-initial">4<div class="array-index">5</div></div>
+            <div class="array-box box-initial">4<div class="array-index">6</div></div>
+          </div>
+        </div>
+        <div class="comparison">
+          Compare: nums[j] = 2, nums[i] = 2<br>
+          2 == 2 ? YES (duplicate found)
+        </div>
+        <div class="explanation">
+          <p>Since nums[j] equals nums[i], we found a duplicate.</p>
+          <p>We do NOT increment j, but we will move i forward.</p>
+        </div>
+      </div>
+      
+      <!-- Iteration 4 -->
+      <div class="iteration">
+        <div class="iteration-title">Iteration 4: i = 4</div>
+        <div class="array-row">
+          <div class="array-label">Array:</div>
+          <div class="array-boxes">
+            <div class="array-box box-initial">1<div class="array-index">0</div></div>
+            <div class="array-box box-j">2<div class="array-index">1</div>
+              <div class="pointer pointer-j">j=1</div>
+            </div>
+            <div class="array-box box-initial">2<div class="array-index">2</div></div>
+            <div class="array-box box-duplicate">2<div class="array-index">3</div></div>
+            <div class="array-box box-i">3<div class="array-index">4</div>
+              <div class="pointer pointer-i">i=4</div>
+            </div>
+            <div class="array-box box-initial">4<div class="array-index">5</div></div>
+            <div class="array-box box-initial">4<div class="array-index">6</div></div>
+          </div>
+        </div>
+        <div class="comparison">
+          Compare: nums[j] = 2, nums[i] = 3<br>
+          2 != 3 ? YES (unique element found)
+        </div>
+        <div class="array-row" style="margin-top: 25px;">
+          <div class="array-label">After update:</div>
+          <div class="array-boxes">
+            <div class="array-box box-initial">1<div class="array-index">0</div></div>
+            <div class="array-box box-initial">2<div class="array-index">1</div></div>
+            <div class="array-box box-j box-modified">3<div class="array-index">2</div>
+              <div class="pointer pointer-j">j=2</div>
+            </div>
+            <div class="array-box box-duplicate">2<div class="array-index">3</div></div>
+            <div class="array-box box-i">3<div class="array-index">4</div>
+              <div class="pointer pointer-i">i=4</div>
+            </div>
+            <div class="array-box box-initial">4<div class="array-index">5</div></div>
+            <div class="array-box box-initial">4<div class="array-index">6</div></div>
+          </div>
+        </div>
+        <div class="explanation">
+          <p>Since nums[j] != nums[i], we found a unique element!</p>
+          <p>1. First we increment j to 2</p>
+          <p>2. Then we set nums[j] = nums[i], copying 3 to position 2</p>
+        </div>
+      </div>
+      
+      <!-- Iteration 5 -->
+      <div class="iteration">
+        <div class="iteration-title">Iteration 5: i = 5</div>
+        <div class="array-row">
+          <div class="array-label">Array:</div>
+          <div class="array-boxes">
+            <div class="array-box box-initial">1<div class="array-index">0</div></div>
+            <div class="array-box box-initial">2<div class="array-index">1</div></div>
+            <div class="array-box box-j">3<div class="array-index">2</div>
+              <div class="pointer pointer-j">j=2</div>
+            </div>
+            <div class="array-box box-duplicate">2<div class="array-index">3</div></div>
+            <div class="array-box box-duplicate">3<div class="array-index">4</div></div>
+            <div class="array-box box-i">4<div class="array-index">5</div>
+              <div class="pointer pointer-i">i=5</div>
+            </div>
+            <div class="array-box box-initial">4<div class="array-index">6</div></div>
+          </div>
+        </div>
+        <div class="comparison">
+          Compare: nums[j] = 3, nums[i] = 4<br>
+          3 != 4 ? YES (unique element found)
+        </div>
+        <div class="array-row" style="margin-top: 25px;">
+          <div class="array-label">After update:</div>
+          <div class="array-boxes">
+            <div class="array-box box-initial">1<div class="array-index">0</div></div>
+            <div class="array-box box-initial">2<div class="array-index">1</div></div>
+            <div class="array-box box-initial">3<div class="array-index">2</div></div>
+            <div class="array-box box-j box-modified">4<div class="array-index">3</div>
+              <div class="pointer pointer-j">j=3</div>
+            </div>
+            <div class="array-box box-duplicate">3<div class="array-index">4</div></div>
+            <div class="array-box box-i">4<div class="array-index">5</div>
+              <div class="pointer pointer-i">i=5</div>
+            </div>
+            <div class="array-box box-initial">4<div class="array-index">6</div></div>
+          </div>
+        </div>
+        <div class="explanation">
+          <p>Since nums[j] != nums[i], we found a unique element!</p>
+          <p>1. First we increment j to 3</p>
+          <p>2. Then we set nums[j] = nums[i], copying 4 to position 3</p>
+        </div>
+      </div>
+      
+      <!-- Iteration 6 -->
+      <div class="iteration">
+        <div class="iteration-title">Iteration 6: i = 6</div>
+        <div class="array-row">
+          <div class="array-label">Array:</div>
+          <div class="array-boxes">
+            <div class="array-box box-initial">1<div class="array-index">0</div></div>
+            <div class="array-box box-initial">2<div class="array-index">1</div></div>
+            <div class="array-box box-initial">3<div class="array-index">2</div></div>
+            <div class="array-box box-j">4<div class="array-index">3</div>
+              <div class="pointer pointer-j">j=3</div>
+            </div>
+            <div class="array-box box-duplicate">3<div class="array-index">4</div></div>
+            <div class="array-box box-duplicate">4<div class="array-index">5</div></div>
+            <div class="array-box box-i box-duplicate">4<div class="array-index">6</div>
+              <div class="pointer pointer-i">i=6</div>
+            </div>
+          </div>
+        </div>
+        <div class="comparison">
+          Compare: nums[j] = 4, nums[i] = 4<br>
+          4 == 4 ? YES (duplicate found)
+        </div>
+        <div class="explanation">
+          <p>Since nums[j] equals nums[i], we found a duplicate.</p>
+          <p>We do NOT increment j</p>
+          <p>This is our last iteration as i has reached the end of the array.</p>
+        </div>
+      </div>
+      
+      <!-- Final Result -->
+      <div class="iteration">
+        <div class="iteration-title">Final Result</div>
+        <div class="array-row">
+          <div class="array-label">Array:</div>
+          <div class="array-boxes">
+            <div class="array-box box-current">1<div class="array-index">0</div></div>
+            <div class="array-box box-current">2<div class="array-index">1</div></div>
+            <div class="array-box box-current">3<div class="array-index">2</div></div>
+            <div class="array-box box-current">4<div class="array-index">3</div></div>
+            <div class="array-box box-duplicate">3<div class="array-index">4</div></div>
+            <div class="array-box box-duplicate">4<div class="array-index">5</div></div>
+            <div class="array-box box-duplicate">4<div class="array-index">6</div></div>
+          </div>
+        </div>
+        <div class="result">
+          Return ++j = 4
+        </div>
+        <div class="explanation">
+          <p>The final array has all unique elements at the beginning, with j = 3 pointing to the last unique element.</p>
+          <p>We return ++j which is 4, meaning there are 4 unique elements.</p>
+          <p>The resulting array is effectively [1, 2, 3, 4, ?, ?, ?] where the ? values are irrelevant.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
