@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550">
+  <!-- Black background -->
+  <rect width="800" height="550" fill="#000" />
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial" font-size="24" fill="#fff" text-anchor="middle">Two Sum Algorithm Visualization</text>
+  
+  <!-- Array representation -->
+  <rect x="100" y="100" width="600" height="60" fill="#111" stroke="#333" stroke-width="2" />
+  
+  <!-- Array elements -->
+  <rect x="100" y="100" width="100" height="60" fill="#1a1a1a" stroke="#333" stroke-width="2" />
+  <text x="150" y="140" font-family="Arial" font-size="24" fill="#00ffcc" text-anchor="middle">2</text>
+  
+  <rect x="200" y="100" width="100" height="60" fill="#1a1a1a" stroke="#333" stroke-width="2" />
+  <text x="250" y="140" font-family="Arial" font-size="24" fill="#ff3366" text-anchor="middle">7</text>
+  
+  <rect x="300" y="100" width="100" height="60" fill="#1a1a1a" stroke="#333" stroke-width="2" />
+  <text x="350" y="140" font-family="Arial" font-size="24" fill="#ffcc00" text-anchor="middle">11</text>
+  
+  <rect x="400" y="100" width="100" height="60" fill="#1a1a1a" stroke="#333" stroke-width="2" />
+  <text x="450" y="140" font-family="Arial" font-size="24" fill="#33ccff" text-anchor="middle">15</text>
+  
+  <rect x="500" y="100" width="100" height="60" fill="#1a1a1a" stroke="#333" stroke-width="2" />
+  <text x="550" y="140" font-family="Arial" font-size="24" fill="#cc99ff" text-anchor="middle">9</text>
+  
+  <rect x="600" y="100" width="100" height="60" fill="#1a1a1a" stroke="#333" stroke-width="2" />
+  <text x="650" y="140" font-family="Arial" font-size="24" fill="#ff9966" text-anchor="middle">6</text>
+  
+  <!-- Index labels -->
+  <text x="150" y="85" font-family="Arial" font-size="16" fill="#888" text-anchor="middle">0</text>
+  <text x="250" y="85" font-family="Arial" font-size="16" fill="#888" text-anchor="middle">1</text>
+  <text x="350" y="85" font-family="Arial" font-size="16" fill="#888" text-anchor="middle">2</text>
+  <text x="450" y="85" font-family="Arial" font-size="16" fill="#888" text-anchor="middle">3</text>
+  <text x="550" y="85" font-family="Arial" font-size="16" fill="#888" text-anchor="middle">4</text>
+  <text x="650" y="85" font-family="Arial" font-size="16" fill="#888" text-anchor="middle">5</text>
+  
+  <!-- Target value -->
+  <text x="400" y="200" font-family="Arial" font-size="20" fill="#fff" text-anchor="middle">Target Sum: 15</text>
+  
+  <!-- Improved Pointers - Arrow style -->
+  <path id="pointer-i" d="M150,170 L150,190 L165,180 Z" fill="#00ffcc">
+    <animate attributeName="d" dur="20s" values="M150,170 L150,190 L165,180 Z;M150,170 L150,190 L165,180 Z;M150,170 L150,190 L165,180 Z;M150,170 L150,190 L165,180 Z;M150,170 L150,190 L165,180 Z;M150,170 L150,190 L165,180 Z;M250,170 L250,190 L265,180 Z;M250,170 L250,190 L265,180 Z;M250,170 L250,190 L265,180 Z;M250,170 L250,190 L265,180 Z;M350,170 L350,190 L365,180 Z;M350,170 L350,190 L365,180 Z;M350,170 L350,190 L365,180 Z;M450,170 L450,190 L465,180 Z;M450,170 L450,190 L465,180 Z;M550,170 L550,190 L565,180 Z;M550,170 L550,190 L565,180 Z;M150,170 L150,190 L165,180 Z" repeatCount="indefinite" />
+  </path>
+  <text id="pointer-i-text" x="150" y="210" font-family="Arial" font-size="16" fill="#00ffcc" text-anchor="middle">i = 0
+    <animate attributeName="x" dur="20s" values="150;150;150;150;150;150;250;250;250;250;350;350;350;450;450;550;550;150" repeatCount="indefinite" />
+    <animate attributeName="textContent" dur="20s" values="i = 0;i = 0;i = 0;i = 0;i = 0;i = 0;i = 1;i = 1;i = 1;i = 1;i = 2;i = 2;i = 2;i = 3;i = 3;i = 4;i = 4;i = 0" repeatCount="indefinite" />
+  </text>
+  
+  <path id="pointer-j" d="M250,170 L250,190 L265,180 Z" fill="#ff3366">
+    <animate attributeName="d" dur="20s" values="M250,170 L250,190 L265,180 Z;M350,170 L350,190 L365,180 Z;M450,170 L450,190 L465,180 Z;M550,170 L550,190 L565,180 Z;M650,170 L650,190 L665,180 Z;M350,170 L350,190 L365,180 Z;M450,170 L450,190 L465,180 Z;M550,170 L550,190 L565,180 Z;M650,170 L650,190 L665,180 Z;M450,170 L450,190 L465,180 Z;M550,170 L550,190 L565,180 Z;M650,170 L650,190 L665,180 Z;M550,170 L550,190 L565,180 Z;M650,170 L650,190 L665,180 Z;M650,170 L650,190 L665,180 Z;M650,170 L650,190 L665,180 Z;M250,170 L250,190 L265,180 Z" repeatCount="indefinite" />
+  </path>
+  <text id="pointer-j-text" x="250" y="210" font-family="Arial" font-size="16" fill="#ff3366" text-anchor="middle">j = 1
+    <animate attributeName="x" dur="20s" values="250;350;450;550;650;350;450;550;650;450;550;650;550;650;650;650;250" repeatCount="indefinite" />
+    <animate attributeName="textContent" dur="20s" values="j = 1;j = 2;j = 3;j = 4;j = 5;j = 2;j = 3;j = 4;j = 5;j = 3;j = 4;j = 5;j = 4;j = 5;j = 5;j = 5;j = 1" repeatCount="indefinite" />
+  </text>
+  
+  <!-- Current sum calculation -->
+  <text x="250" y="250" font-family="Arial" font-size="18" fill="#fff" text-anchor="start">Current Sum: 
+    <animate attributeName="fill" dur="20s" values="#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#00ff00;#fff;#fff;#fff" repeatCount="indefinite" />
+  </text>
+  <text x="380" y="250" font-family="Arial" font-size="18" fill="#fff" text-anchor="start">
+    <animate attributeName="textContent" dur="20s" values="2 + 7 = 9;2 + 11 = 13;2 + 15 = 17;2 + 9 = 11;2 + 6 = 8;7 + 11 = 18;7 + 15 = 22;7 + 9 = 16;7 + 6 = 13;11 + 15 = 26;11 + 9 = 20;11 + 6 = 17;15 + 9 = 24;15 + 6 = 21;9 + 6 = 15;9 + 6 = 15;2 + 7 = 9" repeatCount="indefinite" />
+    <animate attributeName="fill" dur="20s" values="#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#00ff00;#00ff00;#fff" repeatCount="indefinite" />
+  </text>
+  
+  <!-- Check result -->
+  <text x="400" y="290" font-family="Arial" font-size="18" fill="#888" text-anchor="middle">
+    <animate attributeName="textContent" dur="20s" values="Checking...;Not Equal;Not Equal;Not Equal;Not Equal;Not Equal;Not Equal;Not Equal;Not Equal;Not Equal;Not Equal;Not Equal;Not Equal;Not Equal;Found! [4,5] = 15;Returning [4,5];Checking...;" repeatCount="indefinite" />
+    <animate attributeName="fill" dur="20s" values="#888;#ff0000;#ff0000;#ff0000;#ff0000;#ff0000;#ff0000;#ff0000;#ff0000;#ff0000;#ff0000;#ff0000;#ff0000;#ff0000;#00ff00;#00ff00;#888" repeatCount="indefinite" />
+  </text>
+  
+  <!-- Highlight found elements -->
+  <rect id="highlight1" x="500" y="100" width="100" height="60" fill="#00000000" stroke="#00000000" stroke-width="3">
+    <animate attributeName="stroke" dur="20s" values="#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00ff00;#00ff00;#00000000" repeatCount="indefinite" />
+    <animate attributeName="stroke-width" dur="20s" values="3;3;3;3;3;3;3;3;3;3;3;3;3;3;5;5;3" repeatCount="indefinite" />
+  </rect>
+  
+  <rect id="highlight2" x="600" y="100" width="100" height="60" fill="#00000000" stroke="#00000000" stroke-width="3">
+    <animate attributeName="stroke" dur="20s" values="#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00000000;#00ff00;#00ff00;#00000000" repeatCount="indefinite" />
+    <animate attributeName="stroke-width" dur="20s" values="3;3;3;3;3;3;3;3;3;3;3;3;3;3;5;5;3" repeatCount="indefinite" />
+  </rect>
+  
+  <!-- Code visualization with prettier colors -->
+  <rect x="100" y="330" width="600" height="140" fill="#111" stroke="#333" stroke-width="2" rx="5" ry="5" />
+  
+  <!-- Code lines -->
+  <text x="120" y="360" font-family="Courier New" font-size="16" fill="#aaaaaa" text-anchor="start">1  for(int i=0; i&lt;nums.length; i++) {</text>
+  <text x="120" y="390" font-family="Courier New" font-size="16" fill="#aaaaaa" text-anchor="start">2    for(int j=i+1; j&lt;nums.length; j++) {</text>
+  <text x="120" y="420" font-family="Courier New" font-size="16" fill="#aaaaaa" text-anchor="start">3      if(nums[i]+nums[j]==target)</text>
+  <text x="120" y="450" font-family="Courier New" font-size="16" fill="#aaaaaa" text-anchor="start">4        return new int[]{i,j};</text>
+  
+  <!-- Code line highlight with vibrant colors -->
+  <rect id="code-line1" x="100" y="340" width="600" height="22" fill="#00000000" stroke="#00000000" stroke-width="1">
+    <animate attributeName="fill" dur="20s" values="#00ffcc00;#00ffcc33;#00ffcc00;#00ffcc00;#00ffcc00;#00ffcc33;#00ffcc00;#00ffcc00;#00ffcc00;#00ffcc33;#00ffcc00;#00ffcc00;#00ffcc00;#00ffcc00;#00ffcc00;#00ffcc00;#00ffcc00" repeatCount="indefinite" />
+  </rect>
+  
+  <rect id="code-line2" x="100" y="370" width="600" height="22" fill="#00000000" stroke="#00000000" stroke-width="1">
+    <animate attributeName="fill" dur="20s" values="#ff336600;#ff336600;#ff336633;#ff336600;#ff336600;#ff336600;#ff336633;#ff336600;#ff336600;#ff336600;#ff336633;#ff336600;#ff336600;#ff336600;#ff336600;#ff336600;#ff336600" repeatCount="indefinite" />
+  </rect>
+  
+  <rect id="code-line3" x="100" y="400" width="600" height="22" fill="#00000000" stroke="#00000000" stroke-width="1">
+    <animate attributeName="fill" dur="20s" values="#ffcc0000;#ffcc0000;#ffcc0000;#ffcc0033;#ffcc0000;#ffcc0000;#ffcc0000;#ffcc0033;#ffcc0000;#ffcc0000;#ffcc0000;#ffcc0033;#ffcc0000;#ffcc0000;#ffcc0033;#ffcc0000;#ffcc0000" repeatCount="indefinite" />
+  </rect>
+  
+  <rect id="code-line4" x="100" y="430" width="600" height="22" fill="#00000000" stroke="#00000000" stroke-width="1">
+    <animate attributeName="fill" dur="20s" values="#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff00;#33ccff33;#33ccff00" repeatCount="indefinite" />
+  </rect>
+  
+  <!-- Return value -->
+  <rect x="250" y="490" width="300" height="40" rx="10" ry="10" fill="#222" stroke="#333" stroke-width="2" />
+  <text x="400" y="515" font-family="Arial" font-size="18" fill="#fff" text-anchor="middle">
+    <animate attributeName="textContent" dur="20s" values="Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [];Return Value: [4,5];Return Value: [4,5];Return Value: [];" repeatCount="indefinite" />
+    <animate attributeName="fill" dur="20s" values="#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#fff;#00ff00;#00ff00;#fff" repeatCount="indefinite" />
+  </text>
+</svg>
