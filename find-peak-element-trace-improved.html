@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1, h2 {
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc80;
+      margin-top: 40px;
+      text-align: center;
+    }
+    .array {
+      display: flex;
+      margin: 25px 0;
+      justify-content: center;
+    }
+    .element {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #444;
+      margin-right: 8px;
+      border-radius: 10px;
+      font-size: 1.5em;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+    .index {
+      color: #888;
+      text-align: center;
+      margin-right: 8px;
+      width: 60px;
+      font-size: 1.2em;
+    }
+    .iteration {
+      margin-bottom: 80px;
+      padding: 25px;
+      border-radius: 15px;
+      background: linear-gradient(to right, rgba(25, 25, 25, 0.8), rgba(15, 15, 15, 0.8));
+      border-left: 6px solid #00ffcc;
+      box-shadow: 0 5px 15px rgba(0, 255, 204, 0.2);
+    }
+    .highlight {
+      font-weight: bold;
+      color: #00ffcc;
+    }
+    .current {
+      background: linear-gradient(to bottom, #ff3366, #ff0033);
+      color: white;
+      box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+      transform: translateY(-5px);
+      border: none;
+    }
+    .compared {
+      background: linear-gradient(to bottom, #3399ff, #0066ff);
+      color: white;
+      box-shadow: 0 0 20px rgba(51, 153, 255, 0.5);
+      transform: translateY(-5px);
+      border: none;
+    }
+    .result {
+      text-align: center;
+      color: #ffcc00;
+      font-size: 1.8em;
+      font-weight: bold;
+      padding: 20px;
+      text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+      margin-top: 20px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { text-shadow: 0 0 10px rgba(255, 204, 0, 0.5); }
+      50% { text-shadow: 0 0 30px rgba(255, 204, 0, 0.8); }
+      100% { text-shadow: 0 0 10px rgba(255, 204, 0, 0.5); }
+    }
+    .description {
+      text-align: center;
+      font-size: 1.2em;
+      color: #ccc;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Finding a Peak Element</h1>
+    
+    <p class="description">Example array: <span class="highlight">[1, 3, 2, 4, 5, 2]</span></p>
+    
+    <h2>Initial Array</h2>
+    <div class="iteration">      
+      <div class="array">
+        <div class="index">Index</div>
+        <div class="index">0</div>
+        <div class="index">1</div>
+        <div class="index">2</div>
+        <div class="index">3</div>
+        <div class="index">4</div>
+        <div class="index">5</div>
+      </div>
+      
+      <div class="array">
+        <div class="index">Value</div>
+        <div class="element">1</div>
+        <div class="element">3</div>
+        <div class="element">2</div>
+        <div class="element">4</div>
+        <div class="element">5</div>
+        <div class="element">2</div>
+      </div>
+    </div>
+    
+    <h2>Iteration 1</h2>
+    <div class="iteration">
+      <p class="description">Compare <code>nums[0]</code> with <code>nums[1]</code>: Is 1 > 3?</p>
+      
+      <div class="array">
+        <div class="index">Index</div>
+        <div class="index">0</div>
+        <div class="index">1</div>
+        <div class="index">2</div>
+        <div class="index">3</div>
+        <div class="index">4</div>
+        <div class="index">5</div>
+      </div>
+      
+      <div class="array">
+        <div class="index">Value</div>
+        <div class="element current">1</div>
+        <div class="element compared">3</div>
+        <div class="element">2</div>
+        <div class="element">4</div>
+        <div class="element">5</div>
+        <div class="element">2</div>
+      </div>
+      
+      <p class="description">1 is NOT greater than 3, so we continue to the next iteration.</p>
+    </div>
+    
+    <h2>Iteration 2</h2>
+    <div class="iteration">
+      <p class="description">Compare <code>nums[1]</code> with <code>nums[2]</code>: Is 3 > 2?</p>
+      
+      <div class="array">
+        <div class="index">Index</div>
+        <div class="index">0</div>
+        <div class="index">1</div>
+        <div class="index">2</div>
+        <div class="index">3</div>
+        <div class="index">4</div>
+        <div class="index">5</div>
+      </div>
+      
+      <div class="array">
+        <div class="index">Value</div>
+        <div class="element">1</div>
+        <div class="element current">3</div>
+        <div class="element compared">2</div>
+        <div class="element">4</div>
+        <div class="element">5</div>
+        <div class="element">2</div>
+      </div>
+      
+      <p class="description">3 IS greater than 2! We found a peak at index 1.</p>
+    </div>
+    
+    <div class="result">
+      findPeakElement([1, 3, 2, 4, 5, 2]) = 1
+    </div>
+  </div>
+</body>
+</html>
