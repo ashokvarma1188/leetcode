@@ -1,0 +1,307 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700">
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes highlight {
+      0% { fill: #333333; }
+      50% { fill: #ff3366; }
+      100% { fill: #333333; }
+    }
+    @keyframes pulseGlow {
+      0% { filter: drop-shadow(0 0 0px #00ffcc); }
+      50% { filter: drop-shadow(0 0 8px #00ffcc); }
+      100% { filter: drop-shadow(0 0 0px #00ffcc); }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes expandHeight {
+      from { height: 0; }
+      to { height: 100%; }
+    }
+    @keyframes flashBit {
+      0% { fill: #333333; }
+      50% { fill: #ffcc00; }
+      100% { fill: #333333; }
+    }
+    text {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      fill: #ffffff;
+    }
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+      fill: #00ffcc;
+      filter: drop-shadow(0 0 3px #00ffcc);
+    }
+    .subtitle {
+      font-size: 18px;
+      font-weight: bold;
+      fill: #66ccff;
+    }
+    .step {
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+    .highlight {
+      animation: highlight 2s ease-in-out forwards;
+    }
+    .pulse {
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+    .highlight-text {
+      fill: #ff9900;
+      font-weight: bold;
+    }
+    .result-text {
+      fill: #00ff66;
+      font-weight: bold;
+    }
+    .slide-down {
+      animation: slideDown 1s ease-out forwards;
+    }
+    .binary-0 { fill: #444444; }
+    .binary-1 { fill: #ff3366; }
+    .bit-flash {
+      animation: flashBit 1s ease-in-out forwards;
+    }
+    .divider {
+      stroke: #444444;
+      stroke-width: 1;
+      stroke-dasharray: 5,3;
+    }
+    .current-total { fill: #00ccff; }
+    .final-box {
+      fill: #222222;
+      stroke: #00ff66;
+      stroke-width: 3;
+    }
+  </style>
+
+  <!-- Black Background -->
+  <rect width="800" height="700" fill="#111111"/>
+  
+  <!-- Grid lines -->
+  <g stroke="#333333" stroke-width="1">
+    <line x1="400" y1="0" x2="400" y2="700"/>
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="600" x2="800" y2="600"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="400" y="40" class="title" text-anchor="middle" class="pulse">Vertical Visualization: subsetXORSum([3,4,5,6,7,8])</text>
+  <text x="400" y="70" class="subtitle" text-anchor="middle">Step-by-Step Bitwise OR Calculation</text>
+  
+  <!-- Left side - Iteration Steps -->
+  <g class="step" style="animation-delay: 0.5s">
+    <text x="200" y="130" class="subtitle" text-anchor="middle">Input Array: [3,4,5,6,7,8]</text>
+    
+    <!-- Initial state -->
+    <g class="slide-down" style="animation-delay: 1s">
+      <rect x="130" y="150" width="140" height="50" rx="5" fill="#222222" stroke="#00ccff"/>
+      <text x="200" y="180" text-anchor="middle">Initial total = 0000</text>
+    </g>
+    
+    <!-- Iteration 1 -->
+    <g class="slide-down" style="animation-delay: 2s">
+      <line x1="100" y1="210" x2="300" y2="210" class="divider"/>
+      <rect x="70" y="220" width="50" height="50" rx="5" fill="#333333" stroke="#00ccff" class="highlight" style="animation-delay: 2.1s"/>
+      <text x="95" y="250" text-anchor="middle">3</text>
+      <text x="140" y="250" text-anchor="middle">→</text>
+      
+      <!-- Binary representation -->
+      <text x="170" y="235" text-anchor="start">Binary: </text>
+      <rect x="230" y="220" width="25" height="25" rx="3" class="binary-0"/>
+      <rect x="260" y="220" width="25" height="25" rx="3" class="binary-0"/>
+      <rect x="290" y="220" width="25" height="25" rx="3" class="binary-1"/>
+      <rect x="320" y="220" width="25" height="25" rx="3" class="binary-1" class="bit-flash" style="animation-delay: 2.5s"/>
+      <text x="235" y="235" font-size="12" text-anchor="middle">0</text>
+      <text x="265" y="235" font-size="12" text-anchor="middle">0</text>
+      <text x="295" y="235" font-size="12" text-anchor="middle">1</text>
+      <text x="325" y="235" font-size="12" text-anchor="middle">1</text>
+      
+      <!-- Total after operation -->
+      <rect x="130" y="255" width="140" height="30" rx="5" fill="#222222" stroke="#00ccff"/>
+      <text x="200" y="275" text-anchor="middle" class="current-total">total = 0011 (3)</text>
+    </g>
+    
+    <!-- Iteration 2 -->
+    <g class="slide-down" style="animation-delay: 3s">
+      <line x1="100" y1="295" x2="300" y2="295" class="divider"/>
+      <rect x="70" y="305" width="50" height="50" rx="5" fill="#333333" stroke="#00ccff" class="highlight" style="animation-delay: 3.1s"/>
+      <text x="95" y="335" text-anchor="middle">4</text>
+      <text x="140" y="335" text-anchor="middle">→</text>
+      
+      <!-- Binary representation -->
+      <text x="170" y="320" text-anchor="start">Binary: </text>
+      <rect x="230" y="305" width="25" height="25" rx="3" class="binary-0"/>
+      <rect x="260" y="305" width="25" height="25" rx="3" class="binary-1" class="bit-flash" style="animation-delay: 3.5s"/>
+      <rect x="290" y="305" width="25" height="25" rx="3" class="binary-0"/>
+      <rect x="320" y="305" width="25" height="25" rx="3" class="binary-0"/>
+      <text x="235" y="320" font-size="12" text-anchor="middle">0</text>
+      <text x="265" y="320" font-size="12" text-anchor="middle">1</text>
+      <text x="295" y="320" font-size="12" text-anchor="middle">0</text>
+      <text x="325" y="320" font-size="12" text-anchor="middle">0</text>
+      
+      <!-- Total after operation -->
+      <rect x="130" y="340" width="140" height="30" rx="5" fill="#222222" stroke="#00ccff"/>
+      <text x="200" y="360" text-anchor="middle" class="current-total">total = 0111 (7)</text>
+    </g>
+    
+    <!-- Iteration 3 -->
+    <g class="slide-down" style="animation-delay: 4s">
+      <line x1="100" y1="380" x2="300" y2="380" class="divider"/>
+      <rect x="70" y="390" width="50" height="50" rx="5" fill="#333333" stroke="#00ccff" class="highlight" style="animation-delay: 4.1s"/>
+      <text x="95" y="420" text-anchor="middle">5</text>
+      <text x="140" y="420" text-anchor="middle">→</text>
+      
+      <!-- Binary representation -->
+      <text x="170" y="405" text-anchor="start">Binary: </text>
+      <rect x="230" y="390" width="25" height="25" rx="3" class="binary-0"/>
+      <rect x="260" y="390" width="25" height="25" rx="3" class="binary-1"/>
+      <rect x="290" y="390" width="25" height="25" rx="3" class="binary-0"/>
+      <rect x="320" y="390" width="25" height="25" rx="3" class="binary-1"/>
+      <text x="235" y="405" font-size="12" text-anchor="middle">0</text>
+      <text x="265" y="405" font-size="12" text-anchor="middle">1</text>
+      <text x="295" y="405" font-size="12" text-anchor="middle">0</text>
+      <text x="325" y="405" font-size="12" text-anchor="middle">1</text>
+      
+      <!-- Total after operation (no change) -->
+      <rect x="130" y="425" width="140" height="30" rx="5" fill="#222222" stroke="#00ccff"/>
+      <text x="200" y="445" text-anchor="middle" class="current-total">total = 0111 (7)</text>
+    </g>
+    
+    <!-- Final iterations summary -->
+    <g class="slide-down" style="animation-delay: 5s">
+      <line x1="100" y1="465" x2="300" y2="465" class="divider"/>
+      <text x="200" y="490" text-anchor="middle">Remaining iterations:</text>
+      <text x="200" y="520" text-anchor="middle">6 (0110) → total = 0111</text>
+      <text x="200" y="550" text-anchor="middle">7 (0111) → total = 0111</text>
+      <text x="200" y="580" text-anchor="middle">8 (1000) → total = 1111</text>
+    </g>
+    
+    <!-- Final OR value -->
+    <g class="slide-down" style="animation-delay: 6s">
+      <rect x="100" y="600" width="200" height="50" rx="10" class="final-box"/>
+      <text x="200" y="630" class="highlight-text" text-anchor="middle" font-size="18">Final OR: 1111 = 15</text>
+    </g>
+  </g>
+  
+  <!-- Right side - Step 2 and visualization -->
+  <g class="step" style="animation-delay: 7s">
+    <text x="600" y="130" class="subtitle" text-anchor="middle">Binary Visualization</text>
+    
+    <!-- Extended binary representation -->
+    <g class="slide-down" style="animation-delay: 7.5s">
+      <text x="600" y="170" text-anchor="middle">Final Bitwise OR Calculation</text>
+      
+      <!-- Bit positions -->
+      <text x="500" y="200" text-anchor="end">Bit position:</text>
+      <rect x="510" y="190" width="40" height="25" rx="3" fill="#333333" stroke="#66ccff"/>
+      <rect x="555" y="190" width="40" height="25" rx="3" fill="#333333" stroke="#66ccff"/>
+      <rect x="600" y="190" width="40" height="25" rx="3" fill="#333333" stroke="#66ccff"/>
+      <rect x="645" y="190" width="40" height="25" rx="3" fill="#333333" stroke="#66ccff"/>
+      <text x="530" y="205" font-size="12" text-anchor="middle">2³</text>
+      <text x="575" y="205" font-size="12" text-anchor="middle">2²</text>
+      <text x="620" y="205" font-size="12" text-anchor="middle">2¹</text>
+      <text x="665" y="205" font-size="12" text-anchor="middle">2⁰</text>
+      
+      <!-- Number 3 -->
+      <text x="500" y="240" text-anchor="end">3:</text>
+      <rect x="510" y="225" width="40" height="25" rx="3" class="binary-0"/>
+      <rect x="555" y="225" width="40" height="25" rx="3" class="binary-0"/>
+      <rect x="600" y="225" width="40" height="25" rx="3" class="binary-1"/>
+      <rect x="645" y="225" width="40" height="25" rx="3" class="binary-1"/>
+      <text x="530" y="240" font-size="12" text-anchor="middle">0</text>
+      <text x="575" y="240" font-size="12" text-anchor="middle">0</text>
+      <text x="620" y="240" font-size="12" text-anchor="middle">1</text>
+      <text x="665" y="240" font-size="12" text-anchor="middle">1</text>
+      
+      <!-- Number 4 -->
+      <text x="500" y="275" text-anchor="end">4:</text>
+      <rect x="510" y="260" width="40" height="25" rx="3" class="binary-0"/>
+      <rect x="555" y="260" width="40" height="25" rx="3" class="binary-1"/>
+      <rect x="600" y="260" width="40" height="25" rx="3" class="binary-0"/>
+      <rect x="645" y="260" width="40" height="25" rx="3" class="binary-0"/>
+      <text x="530" y="275" font-size="12" text-anchor="middle">0</text>
+      <text x="575" y="275" font-size="12" text-anchor="middle">1</text>
+      <text x="620" y="275" font-size="12" text-anchor="middle">0</text>
+      <text x="665" y="275" font-size="12" text-anchor="middle">0</text>
+      
+      <!-- Number 5 -->
+      <text x="500" y="310" text-anchor="end">5:</text>
+      <rect x="510" y="295" width="40" height="25" rx="3" class="binary-0"/>
+      <rect x="555" y="295" width="40" height="25" rx="3" class="binary-1"/>
+      <rect x="600" y="295" width="40" height="25" rx="3" class="binary-0"/>
+      <rect x="645" y="295" width="40" height="25" rx="3" class="binary-1"/>
+      <text x="530" y="310" font-size="12" text-anchor="middle">0</text>
+      <text x="575" y="310" font-size="12" text-anchor="middle">1</text>
+      <text x="620" y="310" font-size="12" text-anchor="middle">0</text>
+      <text x="665" y="310" font-size="12" text-anchor="middle">1</text>
+      
+      <!-- Number 6 -->
+      <text x="500" y="345" text-anchor="end">6:</text>
+      <rect x="510" y="330" width="40" height="25" rx="3" class="binary-0"/>
+      <rect x="555" y="330" width="40" height="25" rx="3" class="binary-1"/>
+      <rect x="600" y="330" width="40" height="25" rx="3" class="binary-1"/>
+      <rect x="645" y="330" width="40" height="25" rx="3" class="binary-0"/>
+      <text x="530" y="345" font-size="12" text-anchor="middle">0</text>
+      <text x="575" y="345" font-size="12" text-anchor="middle">1</text>
+      <text x="620" y="345" font-size="12" text-anchor="middle">1</text>
+      <text x="665" y="345" font-size="12" text-anchor="middle">0</text>
+      
+      <!-- Number 7 -->
+      <text x="500" y="380" text-anchor="end">7:</text>
+      <rect x="510" y="365" width="40" height="25" rx="3" class="binary-0"/>
+      <rect x="555" y="365" width="40" height="25" rx="3" class="binary-1"/>
+      <rect x="600" y="365" width="40" height="25" rx="3" class="binary-1"/>
+      <rect x="645" y="365" width="40" height="25" rx="3" class="binary-1"/>
+      <text x="530" y="380" font-size="12" text-anchor="middle">0</text>
+      <text x="575" y="380" font-size="12" text-anchor="middle">1</text>
+      <text x="620" y="380" font-size="12" text-anchor="middle">1</text>
+      <text x="665" y="380" font-size="12" text-anchor="middle">1</text>
+      
+      <!-- Number 8 -->
+      <text x="500" y="415" text-anchor="end">8:</text>
+      <rect x="510" y="400" width="40" height="25" rx="3" class="binary-1"/>
+      <rect x="555" y="400" width="40" height="25" rx="3" class="binary-0"/>
+      <rect x="600" y="400" width="40" height="25" rx="3" class="binary-0"/>
+      <rect x="645" y="400" width="40" height="25" rx="3" class="binary-0"/>
+      <text x="530" y="415" font-size="12" text-anchor="middle">1</text>
+      <text x="575" y="415" font-size="12" text-anchor="middle">0</text>
+      <text x="620" y="415" font-size="12" text-anchor="middle">0</text>
+      <text x="665" y="415" font-size="12" text-anchor="middle">0</text>
+      
+      <!-- OR result with highlight -->
+      <line x1="500" y1="435" x2="700" y2="435" class="divider"/>
+      <text x="500" y="460" text-anchor="end" class="highlight-text">OR:</text>
+      <rect x="510" y="445" width="40" height="25" rx="3" class="binary-1" style="animation: flashBit 2s 8s"/>
+      <rect x="555" y="445" width="40" height="25" rx="3" class="binary-1" style="animation: flashBit 2s 8.2s"/>
+      <rect x="600" y="445" width="40" height="25" rx="3" class="binary-1" style="animation: flashBit 2s 8.4s"/>
+      <rect x="645" y="445" width="40" height="25" rx="3" class="binary-1" style="animation: flashBit 2s 8.6s"/>
+      <text x="530" y="460" font-size="12" text-anchor="middle">1</text>
+      <text x="575" y="460" font-size="12" text-anchor="middle">1</text>
+      <text x="620" y="460" font-size="12" text-anchor="middle">1</text>
+      <text x="665" y="460" font-size="12" text-anchor="middle">1</text>
+      
+      <text x="700" y="460" text-anchor="start" class="highlight-text"> = 15</text>
+    </g>
+    
+    <!-- Step 2 Calculation -->
+    <g class="slide-down" style="animation-delay: 9s">
+      <text x="600" y="500" class="subtitle" text-anchor="middle">Final Calculation</text>
+      
+      <rect x="450" y="520" width="300" height="30" rx="5" fill="#222222" stroke="#66ccff"/>
+      <text x="600" y="540" text-anchor="middle">Array length n = 6</text>
+      
+      <rect x="450" y="560" width="300" height="30" rx="5" fill="#222222" stroke="#66ccff"/>
+      <text x="600" y="580" text-anchor="middle">2^(n-1) = 2^5 = 32</text>
+      
+      <rect x="450" y="600" width="300" height="60" rx="10" class="final-box pulse"/>
+      <text x="600" y="635" class="result-text" text-anchor="middle" font-size="20">Result: 15 × 32 = 480</text>
+    </g>
+  </g>
+</svg>
