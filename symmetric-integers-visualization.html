@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 800px;
+    }
+    
+    .title {
+      color: #00ffcc;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    
+    .input-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    input {
+      background-color: #333;
+      color: white;
+      border: 1px solid #00ffcc;
+      padding: 8px;
+      border-radius: 4px;
+      width: 80px;
+    }
+    
+    button {
+      background-color: #00ffcc;
+      color: black;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    button:hover {
+      background-color: #00e6b8;
+    }
+    
+    .visualization {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+      height: 400px;
+      overflow-y: auto;
+      border: 1px solid #444;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    
+    .number-container {
+      padding: 10px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    
+    .number-info {
+      margin-bottom: 10px;
+    }
+    
+    .digits-container {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 10px;
+      justify-content: center;
+    }
+    
+    .digit {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    
+    .symmetric {
+      background-color: rgba(0, 255, 204, 0.2);
+      border: 1px solid #00ffcc;
+    }
+    
+    .not-symmetric {
+      background-color: rgba(255, 99, 71, 0.2);
+      border: 1px solid tomato;
+    }
+    
+    .sum-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .sum {
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    
+    .divider {
+      height: 40px;
+      width: 2px;
+      background-color: #666;
+    }
+    
+    .explanation {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      text-align: center;
+      color: #00ffcc;
+    }
+    
+    .highlighted {
+      background-color: #00ffcc;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Symmetric Integers Visualization</h1>
+    
+    <div class="controls">
+      <div class="input-container">
+        <label for="low">Low:</label>
+        <input type="number" id="low" value="1000" min="1" max="10000">
+      </div>
+      <div class="input-container">
+        <label for="high">High:</label>
+        <input type="number" id="high" value="1020" min="1" max="10000">
+      </div>
+      <button id="start">Start</button>
+      <button id="reset">Reset</button>
+    </div>
+    
+    <div class="visualization" id="visualization"></div>
+    
+    <div class="result" id="result"></div>
+  </div>
+  
+  <script>
+    const colors = [
+      '#00ffcc', '#ff6b6b', '#ffcc00', '#8a2be2', '#00bfff', 
+      '#ff69b4', '#32cd32', '#ffa500', '#9370db', '#20b2aa'
+    ];
+    
+    let animationSpeed = 1000;
+    let isRunning = false;
+    let animationTimeouts = [];
+    
+    document.getElementById('start').addEventListener('click', startVisualization);
+    document.getElementById('reset').addEventListener('click', resetVisualization);
+    
+    function startVisualization() {
+      if (isRunning) return;
+      isRunning = true;
+      
+      resetVisualization();
+      
+      const low = parseInt(document.getElementById('low').value) || 1000;
+      const high = parseInt(document.getElementById('high').value) || 1020;
+      
+      if (high < low) {
+        alert('High value must be greater than or equal to Low value');
+        isRunning = false;
+        return;
+      }
+      
+      if (high - low > 50) {
+        if (!confirm('Visualizing more than 50 numbers may cause performance issues. Continue?')) {
+          isRunning = false;
+          return;
+        }
+      }
+      
+      const visualization = document.getElementById('visualization');
+      const result = document.getElementById('result');
+      result.textContent = 'Processing...';
+      
+      let count = 0;
+      let currentIndex = 0;
+      
+      for (let num = low; num <= high; num++) {
+        const isSymmetric = checkSymmetric(num);
+        if (isSymmetric) count++;
+        
+        const numberContainer = createNumberElement(num, isSymmetric, currentIndex);
+        visualization.appendChild(numberContainer);
+        
+        // Animate after a delay
+        const timeout = setTimeout(() => {
+          numberContainer.style.opacity = '1';
+          if (num === high) {
+            result.textContent = `Found ${count} symmetric integers between ${low} and ${high}`;
+            isRunning = false;
+          }
+        }, animationSpeed * currentIndex);
+        
+        animationTimeouts.push(timeout);
+        currentIndex++;
+      }
+    }
+    
+    function resetVisualization() {
+      const visualization = document.getElementById('visualization');
+      const result = document.getElementById('result');
+      
+      // Clear all timeouts
+      animationTimeouts.forEach(timeout => clearTimeout(timeout));
+      animationTimeouts = [];
+      
+      visualization.innerHTML = '';
+      result.textContent = '';
+      isRunning = false;
+    }
+    
+    function checkSymmetric(num) {
+      const str = num.toString();
+      const length = str.length;
+      
+      // Numbers with odd digits can't be symmetric
+      if (length % 2 !== 0) {
+        return false;
+      }
+      
+      const half = length / 2;
+      let firstHalfSum = 0;
+      let secondHalfSum = 0;
+      
+      // Calculate sum of first half digits
+      for (let i = 0; i < half; i++) {
+        firstHalfSum += parseInt(str[i]);
+      }
+      
+      // Calculate sum of second half digits
+      for (let i = half; i < length; i++) {
+        secondHalfSum += parseInt(str[i]);
+      }
+      
+      return firstHalfSum === secondHalfSum;
+    }
+    
+    function createNumberElement(num, isSymmetric, index) {
+      const numberContainer = document.createElement('div');
+      numberContainer.className = `number-container ${isSymmetric ? 'symmetric' : 'not-symmetric'}`;
+      
+      const numStr = num.toString();
+      const length = numStr.length;
+      const half = length / 2;
+      
+      const numberInfo = document.createElement('div');
+      numberInfo.className = 'number-info';
+      numberInfo.textContent = `Number: ${num}`;
+      
+      const digitsContainer = document.createElement('div');
+      digitsContainer.className = 'digits-container';
+      
+      // First half digits
+      for (let i = 0; i < half; i++) {
+        const digit = document.createElement('div');
+        digit.className = 'digit';
+        digit.textContent = numStr[i];
+        digit.style.backgroundColor = colors[i % colors.length];
+        digit.style.color = 'black';
+        digitsContainer.appendChild(digit);
+      }
+      
+      // Add divider
+      const divider = document.createElement('div');
+      divider.className = 'divider';
+      digitsContainer.appendChild(divider);
+      
+      // Second half digits
+      for (let i = half; i < length; i++) {
+        const digit = document.createElement('div');
+        digit.className = 'digit';
+        digit.textContent = numStr[i];
+        digit.style.backgroundColor = colors[(i - half) % colors.length];
+        digit.style.color = 'black';
+        digitsContainer.appendChild(digit);
+      }
+      
+      // Sum container
+      const sumContainer = document.createElement('div');
+      sumContainer.className = 'sum-container';
+      
+      let firstHalfSum = 0;
+      let secondHalfSum = 0;
+      
+      // Calculate sums
+      for (let i = 0; i < half; i++) {
+        firstHalfSum += parseInt(numStr[i]);
+      }
+      for (let i = half; i < length; i++) {
+        secondHalfSum += parseInt(numStr[i]);
+      }
+      
+      const firstSum = document.createElement('div');
+      firstSum.className = 'sum';
+      firstSum.textContent = `First Half Sum: ${firstHalfSum}`;
+      firstSum.style.backgroundColor = isSymmetric ? 'rgba(0, 255, 204, 0.3)' : 'rgba(255, 255, 255, 0.2)';
+      
+      const secondSum = document.createElement('div');
+      secondSum.className = 'sum';
+      secondSum.textContent = `Second Half Sum: ${secondHalfSum}`;
+      secondSum.style.backgroundColor = isSymmetric ? 'rgba(0, 255, 204, 0.3)' : 'rgba(255, 255, 255, 0.2)';
+      
+      sumContainer.appendChild(firstSum);
+      sumContainer.appendChild(secondSum);
+      
+      // Explanation
+      const explanation = document.createElement('div');
+      explanation.className = 'explanation';
+      
+      if (length % 2 !== 0) {
+        explanation.textContent = `${num} has an odd number of digits (${length}), so it cannot be symmetric.`;
+      } else {
+        if (isSymmetric) {
+          explanation.textContent = `${num} is symmetric because the sum of its first half digits (${firstHalfSum}) equals the sum of its second half digits (${secondHalfSum}).`;
+        } else {
+          explanation.textContent = `${num} is not symmetric because the sum of its first half digits (${firstHalfSum}) does not equal the sum of its second half digits (${secondHalfSum}).`;
+        }
+      }
+      
+      numberContainer.appendChild(numberInfo);
+      numberContainer.appendChild(digitsContainer);
+      numberContainer.appendChild(sumContainer);
+      numberContainer.appendChild(explanation);
+      
+      return numberContainer;
+    }
+  </script>
+</body>
+</html>
